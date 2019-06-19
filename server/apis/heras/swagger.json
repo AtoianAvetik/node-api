@@ -1,0 +1,102 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "heras-api",
+    "description": "My cool TypeScript app",
+    "version": "1.0.0"
+  },
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "Heras",
+      "description": "Simple example endpoints"
+    },
+    {
+      "name": "Specification",
+      "description": "The swagger API specification"
+    }
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/heras": {
+      "get": {
+        "tags": [
+          "Heras"
+        ],
+        "description": "Fetch all examples",
+        "responses": {
+          "200": {
+            "description": "Returns all examples"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Heras"
+        ],
+        "description": "Create a new example",
+        "responses": {
+          "200": {
+            "description": "Returns all examples"
+          }
+        }
+      }
+    },
+    "/heras/{id}": {
+      "get": {
+        "tags": [
+          "Heras"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the example to retrieve",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the example with the specified id"
+          },
+          "400": {
+            "description": "Example not found"
+          }
+        }
+      }
+    },
+    "/spec":{
+      "get": {
+        "tags": [
+          "Specification"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the API specification"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "HerasBody": {
+      "title": "heras",
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "no_stress"
+        }
+      }
+    }
+  }
+}

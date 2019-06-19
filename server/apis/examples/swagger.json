@@ -1,0 +1,102 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "examples-api",
+    "description": "My cool TypeScript app",
+    "version": "1.0.0"
+  },
+  "basePath": "/api/v1",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "Examples",
+      "description": "Simple example endpoints"
+    },
+    {
+      "name": "Specification",
+      "description": "The swagger API specification"
+    }
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/examples": {
+      "get": {
+        "tags": [
+          "Examples"
+        ],
+        "description": "Fetch all examples",
+        "responses": {
+          "200": {
+            "description": "Returns all examples"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Examples"
+        ],
+        "description": "Create a new example",
+        "responses": {
+          "200": {
+            "description": "Returns all examples"
+          }
+        }
+      }
+    },
+    "/examples/{id}": {
+      "get": {
+        "tags": [
+          "Examples"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the example to retrieve",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the example with the specified id"
+          },
+          "400": {
+            "description": "Example not found"
+          }
+        }
+      }
+    },
+    "/spec":{
+      "get": {
+        "tags": [
+          "Specification"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return the API specification"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ExampleBody": {
+      "title": "example",
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "no_stress"
+        }
+      }
+    }
+  }
+}
