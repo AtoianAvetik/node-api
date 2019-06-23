@@ -8,6 +8,15 @@ class ExpressServer {
 
 	constructor() {
 		this.app = express();
+
+        process.on("uncaughtException", e => {
+            console.log(e);
+            process.exit(1);
+        });
+        process.on("unhandledRejection", e => {
+            console.log(e);
+            process.exit(1);
+        });
 	}
 
 	middleware(middlewares: any): ExpressServer {
@@ -23,6 +32,11 @@ class ExpressServer {
 	router( routes: any ): ExpressServer {
 		applyRoutes(routes, this.app);
 		return this;
+	}
+
+	errors( errorHandlers: any ): ExpressServer {
+        applyMiddleware(errorHandlers, this.app);
+        return this;
 	}
 
 	listen( p: string | number = process.env.PORT ): Application {
