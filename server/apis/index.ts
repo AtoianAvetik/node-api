@@ -27,3 +27,24 @@ export const docs = [
 		options: {}
 	}
 ];
+
+export const dbs = [
+	{
+		id: "examples",
+		config: {
+			host     : 'localhost',
+			user     : 'root',
+			password : '',
+			database : 'examples'
+		}
+	},
+	{
+		id: "heras",
+		config: {
+			host     : 'localhost',
+			user     : 'root',
+			password : '',
+			database : 'heras'
+		}
+	}
+];

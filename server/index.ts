@@ -1,6 +1,6 @@
 import './common/env';
 import Server from './common/server';
-import { routes, docs }from './apis';
+import { routes, docs, dbs }from './apis';
 import middlewares from "./middlewares";
 import errorHandlers from "./middlewares/errorHandlers";
 
@@ -10,4 +10,5 @@ export default new Server()
 	.docs( docs )
 	.router( routes )
 	.errors( errorHandlers )
+	.mysql( dbs )
 	.listen( port );

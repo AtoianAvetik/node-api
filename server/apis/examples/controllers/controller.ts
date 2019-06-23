@@ -14,7 +14,7 @@ export class Controller {
 	}
 
 	create( req: Request, res: Response ): void {
-		ExamplesService.create( req.body.name ).then( r =>
+		ExamplesService.create( req.body ).then( r =>
 			res
 				.status( 201 )
 				.location( `/api/v1/examples/${r.id}` )

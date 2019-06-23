@@ -1,10 +1,11 @@
 import express, { Application } from 'express';
 import os from 'os';
-import { applyMiddleware, applyRoutes, applyAPIDocs } from '../utils';
+import { applyMiddleware, applyRoutes, applyAPIDocs, applyMysqlConnections } from '../utils';
 import l from './logger';
 
 class ExpressServer {
 	public app: express.Application;
+	public mysqlConnections = {};
 
 	constructor() {
 		this.app = express();
@@ -39,10 +40,15 @@ class ExpressServer {
         return this;
 	}
 
-	listen( p: string | number = process.env.PORT ): Application {
+    mysql( dbs: any ): ExpressServer {
+        applyMysqlConnections(dbs, this);
+        return this;
+	}
+
+	listen( p: string | number = process.env.PORT ): ExpressServer {
 		const welcome = port => () => l.info( `up and running in ${process.env.NODE_ENV || 'development'} @: ${os.hostname()} on port: ${port}}` );
 		this.app.listen( p, welcome( p ) );
-		return this.app;
+		return this;
 	}
 }
 

@@ -39,6 +39,17 @@
         "tags": [
           "Examples"
         ],
+        "summary": "Creates a new user.",
+        "parameters": [
+          {
+            "name": "example",
+            "in": "body",
+            "description": "The example to create",
+            "schema": {
+              "$ref": "#/definitions/Example"
+            }
+          }
+        ],
         "description": "Create a new example",
         "responses": {
           "200": {
@@ -85,13 +96,18 @@
     }
   },
   "definitions": {
-    "ExampleBody": {
+    "Example": {
       "title": "example",
       "required": [
+        "id",
         "name"
       ],
       "type": "object",
       "properties": {
+        "id": {
+          "type": "integer",
+          "example": "no_stress"
+        },
         "name": {
           "type": "string",
           "example": "no_stress"

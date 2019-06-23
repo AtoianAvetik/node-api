@@ -1,38 +1,39 @@
 import Promise from 'bluebird';
-import L from '../../../common/logger'
-
-let id = 0;
+import L from '../../../common/logger';
+import Server from '../../../../server';
 
 interface Example {
-	id: number,
-	name: string
+    id: number,
+    name: string
 }
 
-const examples: Example[] = [
-	{ id: id++, name: 'example 0' },
-	{ id: id++, name: 'example 1' }
-];
-
 export class ExamplesService {
-	all(): Promise<Example[]> {
-		L.info( examples, 'fetch all examples' );
-		return Promise.resolve( examples );
-	}
+    all(): Promise<Example[]> {
+        return new Promise((resolve, reject ) => {
+            Server.mysqlConnections['examples'].query('SELECT * FROM `examples` WHERE 1', function (error, results, fields) {
+                if (error) throw error;
+                L.info(results, 'fetch all examples from db');
 
-	byId( id: number ): Promise<Example> {
-		L.info( `fetch example with id ${id}` );
-		return this.all().then( r => r[id] )
-	}
+                resolve(results);
+            });
+        });
+    }
 
-	create( name: string ): Promise<Example> {
-		L.info( `create example with name ${name}` );
-		const example: Example = {
-			id: id++,
-			name
-		};
-		examples.push( example );
-		return Promise.resolve( example );
-	}
+    byId(id: number): Promise<Example> {
+        L.info(`fetch example with id ${id}`);
+        return this.all().then(r => r[id])
+    }
+
+    create(example: Example): Promise<Example> {
+        return new Promise((resolve, reject ) => {
+            Server.mysqlConnections['examples'].query('INSERT INTO examples SET ?', example, function (error, results, fields) {
+                if (error) throw error;
+                L.info(`create example with name ${example.name}`);
+
+                resolve(results);
+            });
+        });
+    }
 }
 
 export default new ExamplesService();

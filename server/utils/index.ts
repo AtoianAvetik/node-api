@@ -1,5 +1,7 @@
 import express, { Application, Request, Response, NextFunction, Router } from "express";
 import swaggerUi from "swagger-ui-express";
+import ExpressServer from "../common/server";
+import mysql from "mysql";
 
 type Wrapper = ((app: Application) => void);
 
@@ -56,5 +58,11 @@ export const applyAPIDocs = (docs: Doc[], app: Application) => {
 
 		app.use(path, swaggerUi.serveFiles(document, options));
 		app.get(path, (req, res) => { res.send(swaggerAPIHtml) });
+	}
+};
+
+export const applyMysqlConnections = (dbs, server: ExpressServer) => {
+    for ( const db of dbs ) {
+        server.mysqlConnections[db.id] = mysql.createConnection(db.config);
 	}
 };
